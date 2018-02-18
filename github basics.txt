@@ -4,12 +4,5 @@ Mayar Gamal => done
 Mayar Sayed => Done
 Ali Ahmed   => Done 
 Mai Mohsen => Done
-<<<<<<< HEAD
-<<<<<<< HEAD
 Sara Karam => Done
-=======
 Omar Abd El Shafy =>Hola 
->>>>>>> f4e1b9eb1548e46302045bcc370b239b7bfa69a9
-=======
-Omar Abd El Shafy =>Hola 
->>>>>>> 0ff07657341bb30f19ea9b86d9dcad846edb8009
