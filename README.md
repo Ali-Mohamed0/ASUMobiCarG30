@@ -9,61 +9,59 @@ This is Project is made by a group of students from Faculty of Engineering AinSh
 
 
 
-# Smart Car Features Description :
+## Smart Car Features Description :
 
 This is an featured RC-Car which have additional skills and options to perform nontraditional missions 
 
 
-# Easy Driving Application.
+## Easy Driving Application.
 
-  1-User can control the car Movements Forward ,right..etc, by using an easy mobile app. or by Desktop app. even a 
+  User can control the car Movements Forward ,right..etc, by using an easy mobile app. or by Desktop app. even a 
      child can use it. 
      
-  2-The Car can avoid obstacles under minimum conditions . 
+  The Car can avoid obstacles under minimum conditions . 
   
 
-# Line Tracking Application.
+## Line Tracking Application.
 
-   3-Provide line tracking mode by following a black track on a white background.
+   Provide line tracking mode by following a black track on a white background.
    
 
-# Maximizes the all abilities as possible as can.
+## Accurate Movement Application. 
 
-  4-Maximum battery capacity.
+  Provide accurate movement driving mode.
   
-  5-Maximum speed.
-
-
-# Accurate Movement Application. 
-
-  6-Provide accurate movement driving mode.
+  Can move in rectangular shaped path or circle path according to a certain movement distance and angle.
   
-  7-Can move in rectangular shaped path or circle path according to a certain movement distance and angle.
+## Maximizes the all abilities as possible as can.
+
+  Maximum battery capacity.
   
+  Maximum speed.
 
-All of that will prepared and checked under many quality control circumstances.                                                                                      
 
-#  Team Members :                    
 
-1-Ali Mohamed
+##  Team Members :                    
 
-2-Mayar Gamal
+### 1-Ali Mohamed
 
-3-Mai Mohsen
+### 2-Mayar Gamal
 
-4-Ali Ahmed
+### 3-Mai Mohsen
 
-5-Abdallh Mohamed
+### 4-Ali Ahmed
 
-6-Sara Krm
+### 5-Abdallh Mohamed
 
-7-Omar Abd EL Shafy
+### 6-Sara Krm
 
-8-Mayar Sayed
+### 7-Omar Abd EL Shafy
 
-9-Abdelazim Mohamed
+### 8-Mayar Sayed
 
-10-Omar Ahmed
+### 9-Abdelazim Mohamed
+
+### 10-Omar Ahmed
 
 
                                                
