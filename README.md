@@ -27,7 +27,7 @@ This is an featured RC-Car which have additional skills and options to perform n
    3-Provide line tracking mode by following a black track on a white background.
    
 
-# Maximizes the all appetites as possible as can.
+# Maximizes the all abilities as possible as can.
 
   4-Maximum battery capacity.
   
