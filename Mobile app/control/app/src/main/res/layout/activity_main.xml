@@ -3,12 +3,14 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:paddingLeft="16dp"
-    android:paddingRight="16dp" >
+    android:paddingRight="16dp"
+    >
 
     <android.support.v7.widget.LinearLayoutCompat
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
         android:orientation= "horizontal"
+        android:id="@+id/header" >
 
         <Button
             android:layout_width="wrap_content"
@@ -28,5 +30,11 @@
             android:text="FULL SPEED"/>
 
     </android.support.v7.widget.LinearLayoutCompat>
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="connect"
+        android:id="@+id/co"
+        android:layout_below="@+id/header"/>
 
 </RelativeLayout>
