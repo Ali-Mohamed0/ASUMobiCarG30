@@ -16,6 +16,9 @@ void setup() {
   pinMode(ledPin1, OUTPUT);      // declare the ledPin as an OUTPUT:
   pinMode(ledPin2, OUTPUT);   
   pinMode(ledPin3, OUTPUT); 
+  pinMode(sensorPin1, INPUT);      // declare the sensorPin as an INPUT:      
+  pinMode(sensorPin2, INPUT);
+  pinMode(sensorPin3, INPUT);
 }
 
 void loop() {
