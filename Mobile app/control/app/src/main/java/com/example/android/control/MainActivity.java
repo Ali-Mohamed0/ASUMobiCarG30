@@ -12,7 +12,10 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.Toast;
 
+//a thread is a single program making multiple tasks at the same time like google chrome when we open multiple tabs
+// each tab is a thread
 public class MainActivity extends AppCompatActivity {
 
 
@@ -21,5 +24,11 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
     }
+    // fast way to call Toast
+    private void msg(String s)
+    {
+        Toast.makeText(getApplicationContext(), s, Toast.LENGTH_LONG).show();
+    }
+
 
 }
