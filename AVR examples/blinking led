@@ -11,12 +11,12 @@
 #include <avr/delay.h>
 
 int main (void) {
-   DDRA = 0B00000001 // setting A0 as an output
-   while{
+   DDRA = 0B00000001; // setting A0 as an output
+   while(1) {
    PORTA = 0B00000001; // pin A0 is high
    _delay_ms(1000);
-   PORTA = 0B00000000 // pin A0 is low
-   _delay_ms(1000)
+   PORTA = 0B00000000; // pin A0 is low
+   _delay_ms(1000);
    }
 return 0 ;
 } 
