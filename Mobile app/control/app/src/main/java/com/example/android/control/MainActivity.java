@@ -18,10 +18,60 @@ import android.widget.Toast;
 // each tab is a thread
 public class MainActivity extends AppCompatActivity {
 
+    //creating a bluetooth adapter object
+    BluetoothAdapter mBluetoothAdapter;
+
+
+    // Create a BroadcastReceiver for ACTION_FOUND
+    private final BroadcastReceiver mBroadcastReceiver1 = new BroadcastReceiver() {
+        public void onReceive(Context context, Intent intent) {
+            String action = intent.getAction();
+            // When discovery finds a device
+            if (action.equals(mBluetoothAdapter.ACTION_STATE_CHANGED)) {
+                final int state = intent.getIntExtra(BluetoothAdapter.EXTRA_STATE, mBluetoothAdapter.ERROR);
+
+                switch(state){
+                    case BluetoothAdapter.STATE_OFF:
+                        msg("state off");
+                        break;
+                    case BluetoothAdapter.STATE_TURNING_OFF:
+                        msg("state turning off");
+                        break;
+                    case BluetoothAdapter.STATE_ON:
+                        msg("state on");
+                        break;
+                    case BluetoothAdapter.STATE_TURNING_ON:
+                        msg("state turning on");
+                        break;
+                }
+            }
+        }
+    };
+
+    @Override
+    protected void onDestroy() {
+        msg("destroying the broadcast receiver");
+        super.onDestroy();
+        unregisterReceiver(mBroadcastReceiver1);
+    }
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        //btn for off and on
+        Button btnONOFF = (Button) findViewById(R.id.btnONOFF);
+
+        mBluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
+
+
+        btnONOFF.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                msg("enabling/disabling bluetooth");
+                enableDisableBT();
+            }
+        });
 
     }
     // fast way to call Toast
@@ -30,5 +80,27 @@ public class MainActivity extends AppCompatActivity {
         Toast.makeText(getApplicationContext(), s, Toast.LENGTH_LONG).show();
     }
 
+
+    public void enableDisableBT(){
+        if(mBluetoothAdapter == null){
+            msg("does not have bluetooth in mobile");
+        }
+        if(!mBluetoothAdapter.isEnabled()){
+            msg("enabling bluetooth");
+            Intent enableBTIntent = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
+            startActivity(enableBTIntent);
+
+            IntentFilter BTIntent = new IntentFilter(BluetoothAdapter.ACTION_STATE_CHANGED);
+            registerReceiver(mBroadcastReceiver1, BTIntent);
+        }
+        if(mBluetoothAdapter.isEnabled()){
+            msg("disabling bluetooth");
+            mBluetoothAdapter.disable();
+
+            IntentFilter BTIntent = new IntentFilter(BluetoothAdapter.ACTION_STATE_CHANGED);
+            registerReceiver(mBroadcastReceiver1, BTIntent);
+        }
+
+    }
 
 }
