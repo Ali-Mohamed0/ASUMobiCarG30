@@ -2,12 +2,15 @@ package com.example.android.control2;
 
 
 import android.Manifest;
+import android.app.ProgressDialog;
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
+import android.bluetooth.BluetoothSocket;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -18,7 +21,9 @@ import android.widget.Button;
 import android.widget.ListView;
 import android.widget.Toast;
 
+import java.io.IOException;
 import java.util.ArrayList;
+import java.util.UUID;
 
 
 public class MainActivity extends AppCompatActivity implements AdapterView.OnItemClickListener{
@@ -27,12 +32,18 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
     BluetoothAdapter mBluetoothAdapter;
     Button btnEnableDisable_Discoverable;
 
+    BluetoothConnectionService mBluetoothConnection;
+    Button btnStartConnection;
+
+    private static final UUID MY_UUID_INSECURE =
+            UUID.fromString("8ce255c0-200a-11e0-ac64-0800200c9a66");
+
     public ArrayList<BluetoothDevice> mBTDevices = new ArrayList<>();
 
     public DeviceListAdapter mDeviceListAdapter;
 
     ListView lvNewDevices;
-
+    BluetoothDevice mBTDevice;
 
     // Create a BroadcastReceiver for ACTION_FOUND
     private final BroadcastReceiver mBroadcastReceiver1 = new BroadcastReceiver() {
@@ -177,13 +188,20 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
         mBluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
 
         lvNewDevices.setOnItemClickListener(MainActivity.this);
-
+        btnStartConnection = (Button) findViewById(R.id.btnStartConnection);
 
         btnONOFF.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 msg("onClick: enabling/disabling bluetooth.");
                 enableDisableBT();
+            }
+        });
+
+        btnStartConnection.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startConnection();
             }
         });
 
@@ -212,6 +230,19 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
         }
 
     }
+    public void startConnection(){
+        startBTConnection(mBTDevice,MY_UUID_INSECURE);
+    }
+
+    //starting bluetooth connection
+
+
+    public void startBTConnection(BluetoothDevice device, UUID uuid){
+        msg("startBTConnection: Initializing RFCOM Bluetooth Connection.");
+
+        mBluetoothConnection.startClient(device,uuid);
+    }
+
 
 
     public void btnEnableDisable_Discoverable(View view) {
@@ -263,22 +294,25 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
         //first cancel discovery because its very memory intensive.
         mBluetoothAdapter.cancelDiscovery();
 
-        Log.d(TAG, "onItemClick: You Clicked on a device.");
+        msg("onItemClick: You Clicked on a device.");
         String deviceName = mBTDevices.get(i).getName();
         String deviceAddress = mBTDevices.get(i).getAddress();
+
+
 
         msg("onItemClick: deviceName = " + deviceName);
         msg("onItemClick: deviceAddress = " + deviceAddress);
 
         //create the bond.
         //NOTE: Requires API 17+? I think this is JellyBean
-        if(Build.VERSION.SDK_INT > Build.VERSION_CODES.JELLY_BEAN_MR2){
-            msg("Trying to pair with " + deviceName);
-            mBTDevices.get(i).createBond();
-        }
+
     }
     private void msg(String s)
     {
         Toast.makeText(getApplicationContext(), s, Toast.LENGTH_SHORT).show();
     }
+
+
+
+
 }
