@@ -1,7 +1,8 @@
 const int pingPin = 11;
 long duration, cm;
 long microsecondsToCentimeters(long microseconds)
-{return microseconds;
+{
+  return microseconds / 29 / 2 ;
 }
 void setup() {
 Serial.begin(9600);
