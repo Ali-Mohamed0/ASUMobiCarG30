@@ -17,7 +17,8 @@
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
         android:layout_alignParentRight="true"
-        android:id="@+id/btnONOFF"/>
+        android:id="@+id/btnONOFF"
+        tools:ignore="HardcodedText,RtlHardcoded" />
 
     <Button
         android:text="Enable Discoverable"
@@ -26,17 +27,19 @@
         android:id="@+id/btnDiscoverable_on_off"
         android:onClick="btnEnableDisable_Discoverable"
         android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"/>
+        android:layout_centerHorizontal="true"
+        tools:ignore="HardcodedText" />
 
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/btnFindUnpairedDevices"
         android:text="Discover"
-        android:onClick="btnDiscover"/>
+        android:onClick="btnDiscover"
+        tools:ignore="HardcodedText" />
 
     <ListView
-        android:layout_below="@+id/btnFindUnpairedDevices"
+        android:layout_below="@+id/btnStartConnection"
         android:layout_width="match_parent"
         android:layout_height="150dp"
         android:id="@+id/lvNewDevices"/>
@@ -46,16 +49,18 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/btnStartConnection"
-        android:layout_alignParentBottom="true"
-        android:text="Start Connection"/>
+        android:layout_below="@+id/btnFindUnpairedDevices"
+        android:text="Start Connection"
+        tools:ignore="HardcodedText" />
     <Button
         android:layout_marginTop="10dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/left"
-        android:layout_alignParentBottom="true"
+        android:id="@+id/rock_and_roll"
+        android:layout_below="@id/btnFindUnpairedDevices"
         android:layout_toRightOf="@id/btnStartConnection"
-        android:text="left"/>
+        android:text="Rock_nd_Roll"
+        tools:ignore="HardcodedText,RtlHardcoded" />
 
 
 
