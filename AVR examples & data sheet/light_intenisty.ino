@@ -2,7 +2,7 @@
 #include <avr/delay.h> 
 #include <avr/interrupt.h>
 
-float dutycycle = 0 ;
+int x = 0 ;
 
 int main (void){
   
@@ -12,7 +12,6 @@ int main (void){
     TCCR0A |=1<<COM0A1 ;
     TCCR0A |=1<<WGM00 ;
     TCCR0A |=1<<WGM01 ;
-    OCR0A = (dutycycle/100)*255 ; //gets the fraction that represent the amout of time the signal will be high 
     //--------------------------------------------//
 
 
@@ -21,29 +20,22 @@ int main (void){
     //-----------------------------------------------------------// 
 
 
-   //--setting interrupts--//
-    sei();
-    TIMSK0 |= 1 << TOIE0 ; //enable overflow interrupt
-    // ----------------------// 
-
+   
    
 
  while(1){
     // PORTD |=1<<PIND6 ; // SETTING D6 HIGH
+   OCR0A =x;
     _delay_ms(100);
-    dutycycle +=10;
+    x +=30;
 
-    if (dutycycle> 100){
-      dutycycle = 0 ; //resetting dutycycle if it exceeds 100
+    if (x> 255){
+      x = 0 ; //resetting dutycycle if it exceeds 100
       }
   }
 
 }
 
-ISR(TIMER0_OVF_VECT){
-  OCR0A = (dutycycle/100)*255 ; 
-  //law 7asal overflow it gets here and recalculate the dutycycle
-  }
 
 
 
