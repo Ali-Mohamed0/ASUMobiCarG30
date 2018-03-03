@@ -164,6 +164,35 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
 
 
 
+
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+
+        btnEnableDisable_Discoverable = (Button) findViewById(R.id.btnDiscoverable_on_off);
+        lvNewDevices = (ListView) findViewById(R.id.lvNewDevices);
+        mBTDevices = new ArrayList<>();
+
+        //Broadcasts when bond state changes (ie:pairing)
+        IntentFilter filter = new IntentFilter(BluetoothDevice.ACTION_BOND_STATE_CHANGED);
+        registerReceiver(mBroadcastReceiver4, filter);
+
+        mBluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
+
+        lvNewDevices.setOnItemClickListener(MainActivity.this);
+
+
+
+
+
+
+
+
+
+    }
+
     @Override
     protected void onDestroy() {
         msg("onDestroy: called.");
@@ -172,55 +201,8 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
         unregisterReceiver(mBroadcastReceiver2);
         unregisterReceiver(mBroadcastReceiver3);
         unregisterReceiver(mBroadcastReceiver4);
-        //mBluetoothAdapter.cancelDiscovery();
+        mBluetoothAdapter.cancelDiscovery();
     }
-
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
-        Button btnONOFF = (Button) findViewById(R.id.btnONOFF);
-        btnEnableDisable_Discoverable = (Button) findViewById(R.id.btnDiscoverable_on_off);
-        lvNewDevices = (ListView) findViewById(R.id.lvNewDevices);
-        mBTDevices = new ArrayList<>();
-        final Button rock_and_roll = (Button) findViewById(R.id.rock_and_roll);
-        //Broadcasts when bond state changes (ie:pairing)
-        IntentFilter filter = new IntentFilter(BluetoothDevice.ACTION_BOND_STATE_CHANGED);
-        registerReceiver(mBroadcastReceiver4, filter);
-
-        mBluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
-
-        lvNewDevices.setOnItemClickListener(MainActivity.this);
-        btnStartConnection = (Button) findViewById(R.id.btnStartConnection);
-
-        btnONOFF.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                msg("onClick: enabling/disabling bluetooth.");
-                enableDisableBT();
-            }
-        });
-
-        rock_and_roll.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                setContentView(R.layout.rock_and_roll);
-
-            }
-
-        });
-
-
-        btnStartConnection.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                startConnection();
-            }
-        });
-
-    }
-
-
 
     public void enableDisableBT(){
         if(mBluetoothAdapter == null){
@@ -279,21 +261,7 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
             e.printStackTrace();
         }
     }
-    private void left()
-    {
-        if (btSocket!=null)
-        {
-            try
-            {
-                btSocket.getOutputStream().write("L".toString().getBytes());
-                msg("sending L");
-            }
-            catch (IOException e)
-            {
-                msg("Error");
-            }
-        }
-    }
+
 
 
 
@@ -365,6 +333,25 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
     {
         Toast.makeText(getApplicationContext(), s, Toast.LENGTH_SHORT).show();
     }
+    private void left()
+    {
+        if (btSocket!=null)
+        {
+            try
+            {
+                btSocket.getOutputStream().write("L".toString().getBytes());
+                msg("sending L");
+            }
+            catch (IOException e)
+            {
+                msg("Error");
+            }
+        }
+        else{
+            msg("connect first");
+            setContentView(R.layout.activity_main);
+        }
+    }
     private void forward()
     {
         if (btSocket!=null)
@@ -377,6 +364,10 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
             {
                 msg("Error");
             }
+        }
+        else{
+            msg("connect first");
+            setContentView(R.layout.activity_main);
         }
     }
     private void right()
@@ -392,6 +383,10 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
                 msg("Error");
             }
         }
+        else{
+            msg("connect first");
+            setContentView(R.layout.activity_main);
+        }
     }
     private void backward()
     {
@@ -405,6 +400,10 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
             {
                 msg("Error");
             }
+        }
+        else{
+            msg("connect first");
+            setContentView(R.layout.activity_main);
         }
     }
     private void stop()
@@ -420,8 +419,45 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
                 msg("Error");
             }
         }
+        else{
+            msg("connect first");
+            setContentView(R.layout.activity_main);
+        }
     }
 
 
+    public void left(View view) {
+        left();
+    }
 
+    public void backward(View view) {
+        backward();
+    }
+
+    public void forward(View view) {
+        forward();
+    }
+
+    public void right(View view) {
+        right();
+    }
+
+    public void stop(View view) {
+        stop();
+    }
+
+    public void rock_nd_roll(View view) {
+
+        setContentView(R.layout.rock_and_roll);
+
+    }
+
+    public void on_off(View view) {
+        msg("onClick: enabling/disabling bluetooth.");
+        enableDisableBT();
+    }
+
+    public void start(View view) {
+        startConnection();
+    }
 }
