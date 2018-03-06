@@ -193,16 +193,8 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
 
     }
 
-    @Override
-    protected void onDestroy() {
-        msg("onDestroy: called.");
-        super.onDestroy();
-        unregisterReceiver(mBroadcastReceiver1);
-        unregisterReceiver(mBroadcastReceiver2);
-        unregisterReceiver(mBroadcastReceiver3);
-        unregisterReceiver(mBroadcastReceiver4);
-        mBluetoothAdapter.cancelDiscovery();
-    }
+
+
 
     public void enableDisableBT(){
         if(mBluetoothAdapter == null){
