@@ -24,6 +24,7 @@ distance= duration*0.034/2;             // Calculating the distance
 
 Serial.print("Distance: ");              // Prints the distance on the Serial Monitor
 Serial.println(distance);
+  
   //case 1 : only one ultrasonic
 if(distance<30) 
   {
@@ -39,4 +40,5 @@ if(distance<30)
         }
       }
   }
+  
               }
