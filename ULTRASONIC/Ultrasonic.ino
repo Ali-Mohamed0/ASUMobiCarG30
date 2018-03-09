@@ -35,7 +35,7 @@ if(distance<30)
       if(distance<30) 
         {
         right;                          // turn right to return back
-        stop;                           // stop
+        stopcar;                           // stop
         }
       }
   }
