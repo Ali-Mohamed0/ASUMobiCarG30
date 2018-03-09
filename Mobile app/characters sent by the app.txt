@@ -1,0 +1,5 @@
+"F" ==> forward
+"B" ==> backward
+"R" ==> right
+"L" ==> left
+"S" ==> stop
