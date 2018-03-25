@@ -10,11 +10,13 @@ void inc_speed();
 void dec_speed();
 void ultrasonic();
 
+//for ultrasonic
 const int trigPin = 9;     // defines pins numbers
 const int echoPin = 10;
 
 long duration;             // defines variables
 int distance;
+//........................
 
 void setup() {
   DDRD |= 1 << PIND5;  //setting D5 as an output
@@ -81,7 +83,6 @@ void ultrasonic(){
         left(10);                         
       }  
   }
-  
   
   }
 
