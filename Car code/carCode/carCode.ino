@@ -10,6 +10,12 @@ void inc_speed();
 void dec_speed();
 void ultrasonic();
 
+const int trigPin = 9;     // defines pins numbers
+const int echoPin = 10;
+
+long duration;             // defines variables
+int distance;
+
 void setup() {
   DDRD |= 1 << PIND5;  //setting D5 as an output
   DDRD |= 1 << PIND6;  //setting D6 as an output
@@ -36,6 +42,12 @@ void setup() {
    //---setting fast pwm mode bits on TC1 Control Register B ---//
       TCCR0B |=1<<CS10 ; //no prescalling
     //-----------------------------------------------------------// 
+  
+  //for Ultrasonic
+ pinMode(trigPin, OUTPUT);     // Sets the trigPin as an Output
+ pinMode(echoPin, INPUT);     // Sets the echoPin as an Input
+ Serial.begin(9600);         // Starts the serial communication
+
 
 }
 
@@ -44,6 +56,32 @@ void loop() {
 }
 
 void ultrasonic(){
+  digitalWrite(trigPin, LOW);       // Clears the trigPin
+  delayMicroseconds(2);
+  digitalWrite(trigPin, HIGH);       // Sets the trigPin on HIGH state for 10 micro seconds
+  delayMicroseconds(10);
+  digitalWrite(trigPin, LOW);
+
+  duration = pulseIn(echoPin, HIGH);    // Reads the echoPin, returns the sound wave travel time in microseconds
+
+  distance= duration*0.034/2;             // Calculating the distance
+
+  Serial.print("Distance: ");              // Prints the distance on the Serial Monitor
+  Serial.println(distance);
+
+  if(distance<30) 
+  {
+    stopcar();
+    back(20);
+    left(10);                               // turn left
+    if(distance<30)
+      {
+        stopcar();
+        back(10);
+        left(10);                         
+      }  
+  }
+  
   
   }
 
