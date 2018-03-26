@@ -74,7 +74,9 @@ void ultrasonic(){
   if(distance<30) 
   {
     stopcar();
+    delay(500);
     back(20);
+    delay(1000);
     left(10);                               // turn left
     if(distance<30)
       {
