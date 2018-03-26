@@ -81,7 +81,9 @@ void ultrasonic(){
     if(distance<30)
       {
         stopcar();
+        delay(500);
         back(10);
+        delay(1000);
         left(10);                         
       }  
   }
