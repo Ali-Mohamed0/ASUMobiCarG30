@@ -75,16 +75,16 @@ void ultrasonic(){
   {
     stopcar();
     delay(500);
-    back(20);
+    back(150);
     delay(1000);
-    left(10);                               // turn left
+    left(150);                               // turn left
     if(distance<30)
       {
         stopcar();
         delay(500);
-        back(10);
+        back(150);
         delay(1000);
-        left(10);                         
+        left(150);                         
       }  
   }
   
