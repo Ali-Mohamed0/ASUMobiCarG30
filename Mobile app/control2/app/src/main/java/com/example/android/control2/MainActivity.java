@@ -416,6 +416,78 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
             setContentView(R.layout.activity_main);
         }
     }
+    private void low()
+    {
+        if (btSocket!=null)
+        {
+            try
+            {
+                btSocket.getOutputStream().write("2".toString().getBytes());
+            }
+            catch (IOException e)
+            {
+                msg("Error");
+            }
+        }
+        else{
+            msg("connect first");
+            setContentView(R.layout.activity_main);
+        }
+    }
+    private void medium()
+    {
+        if (btSocket!=null)
+        {
+            try
+            {
+                btSocket.getOutputStream().write("3".toString().getBytes());
+            }
+            catch (IOException e)
+            {
+                msg("Error");
+            }
+        }
+        else{
+            msg("connect first");
+            setContentView(R.layout.activity_main);
+        }
+    }
+    private void high()
+    {
+        if (btSocket!=null)
+        {
+            try
+            {
+                btSocket.getOutputStream().write("4".toString().getBytes());
+            }
+            catch (IOException e)
+            {
+                msg("Error");
+            }
+        }
+        else{
+            msg("connect first");
+            setContentView(R.layout.activity_main);
+        }
+    }
+    private void no()
+    {
+        if (btSocket!=null)
+        {
+            try
+            {
+                btSocket.getOutputStream().write("1".toString().getBytes());
+            }
+            catch (IOException e)
+            {
+                msg("Error");
+            }
+        }
+        else{
+            msg("connect first");
+            setContentView(R.layout.activity_main);
+        }
+    }
 
 
     public void left(View view) {
@@ -452,4 +524,12 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
     public void start(View view) {
         startConnection();
     }
+
+    public void low(View view) {low();}
+
+    public void medium(View view) {medium();}
+
+    public void high(View view) {high();}
+
+    public void no(View view) {no();}
 }
