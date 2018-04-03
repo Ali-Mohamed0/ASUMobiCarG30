@@ -46,19 +46,19 @@ while(1)
 data=UART_RxChar();
 switch(data)
 {
-case ‘F’:PORTB=0b00001010; //Forward
+case ('F') :PORTB=0b00001010; //Forward
 break;
 
-case ‘L’:PORTB=0b00001001; //Left
+case ('L') :PORTB=0b00001001; //Left
 break;
 
-case ‘R’:PORTB=0b00000110; //Right
+case ('R'):PORTB=0b00000110; //Right
 break;
 
-case ‘B’:PORTB=0b00000101; //Back
+case ('B'):PORTB=0b00000101; //Back
 break;
 
-case ‘S’:PORTB=0b00001111; //Stop
+case ('S'):PORTB=0b00001111; //Stop
 break;
 }
 }
