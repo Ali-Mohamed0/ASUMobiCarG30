@@ -31,12 +31,12 @@ if(distance<30)
     left;                               // turn left
     if(distance<30)
       {
-        right;                         // turn right to the initial position
-        right;                         // turn right
+        right();                         // turn right to the initial position
+        right();                         // turn right
       if(distance<30) 
         {
-        right;                          // turn right to return back
-        stopcar;                           // stop
+        right();                          // turn right to return back
+        stopcar();                           // stop
         }
       }
   }

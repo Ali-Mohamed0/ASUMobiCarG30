@@ -1,4 +1,6 @@
-const int pingPin = 11;
+const int trigPin = 11;
+const int echoPin = 10;
+
 long duration, cm;
 long microsecondsToCentimeters(long microseconds)
 {
@@ -6,18 +8,20 @@ long microsecondsToCentimeters(long microseconds)
 }
 void setup() {
 Serial.begin(9600);
+pinMode(trigPin,OUTPUT);
+pinMode(echoPin,INPUT);
 }
 
 void loop() {
-  pinMode(pingPin, OUTPUT);
-  digitalWrite(pingPin, LOW);
+ 
+  digitalWrite(trigPin, LOW);
   delayMicroseconds(2);
-  digitalWrite(pingPin, HIGH);
+  digitalWrite(trigPin, HIGH);
   delayMicroseconds(10);
-  digitalWrite(pingPin, LOW);
-  pinMode(pingPin, INPUT);
+  digitalWrite(trigPin, LOW);
   
-   duration = pulseIn(pingPin, HIGH); 
+  
+   duration = pulseIn(echoPin, HIGH); 
    cm = microsecondsToCentimeters(duration);
   Serial.print(cm);
   Serial.print("cm");
