@@ -11,6 +11,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.SharedPreferences;
+import android.media.MediaPlayer;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
@@ -34,7 +35,7 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
 
     BluetoothAdapter mBluetoothAdapter;
     Button btnEnableDisable_Discoverable;
-
+    MediaPlayer mySong;
     BluetoothConnectionService mBluetoothConnection;
     Button btnStartConnection;
     BluetoothSocket btSocket = null;
@@ -182,7 +183,7 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
         mBluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
 
         lvNewDevices.setOnItemClickListener(MainActivity.this);
-
+        mySong = MediaPlayer.create(MainActivity.this,R.raw.ss);
 
 
 
@@ -506,6 +507,10 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
             setContentView(R.layout.activity_main);
         }
     }
+    private void playIt()
+    {
+        mySong.start();
+    }
 
 
     public void left(View view) {
@@ -552,4 +557,8 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
     public void no(View view) {no();}
 
     public void line_track(View view) {line_trackk();}
+
+    public void play(View view) {
+        playIt();
+    }
 }
