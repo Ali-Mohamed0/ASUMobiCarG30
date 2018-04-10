@@ -11,7 +11,7 @@
     android:paddingRight="16dp"
     android:paddingTop="16dp"
     tools:context="com.example.android.control2.MainActivity"
-    android:background="@drawable/batman4"
+
     >
 
 
@@ -47,7 +47,7 @@
         android:layout_below="@+id/btnStartConnection"
         android:layout_width="match_parent"
         android:layout_height="150dp"
-        android:textColor="#f44242"
+
         android:id="@+id/lvNewDevices"/>
 
     <Button
@@ -69,7 +69,7 @@
         android:layout_marginTop="10dp"
         android:layout_toRightOf="@id/btnStartConnection"
         android:onClick="rock_nd_roll"
-        android:text="Rock_nd_Roll"
+        android:text="start"
         tools:ignore="HardcodedText,RtlHardcoded" />
 
 

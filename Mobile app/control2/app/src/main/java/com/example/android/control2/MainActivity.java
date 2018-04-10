@@ -488,6 +488,24 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
             setContentView(R.layout.activity_main);
         }
     }
+    private void line_trackk()
+    {
+        if (btSocket!=null)
+        {
+            try
+            {
+                btSocket.getOutputStream().write("A".toString().getBytes());
+            }
+            catch (IOException e)
+            {
+                msg("Error");
+            }
+        }
+        else{
+            msg("connect first");
+            setContentView(R.layout.activity_main);
+        }
+    }
 
 
     public void left(View view) {
@@ -532,4 +550,6 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
     public void high(View view) {high();}
 
     public void no(View view) {no();}
+
+    public void line_track(View view) {line_trackk();}
 }
