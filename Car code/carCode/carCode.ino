@@ -1,6 +1,11 @@
 #include <avr/io.h>
 #include <util/delay.h>
-
+int sen1=3;
+int sen2=7;
+int sen3=5;
+int LeftSen= 1;
+int RightSen=1;
+int Center= 1 ;
 void forward(int velocity );
 void backward(int velocity);
 void right(int velocity);
@@ -9,6 +14,7 @@ void stopcar();
 void inc_speed();
 void dec_speed();
 void ultrasonic();
+void linefollower();
 
 //for ultrasonic
 const int trigPin = 11;     // defines pins numbers
@@ -30,6 +36,12 @@ void setup() {
   DDRD |= 1 << PIND6;  //setting D6 as an output
   DDRB |= 1 << PINB0;  // setting B0 as an output
   DDRB |= 1 << PINB4;  // setting B4 as an output
+
+  //line follower
+    pinMode(sen1,INPUT); 
+   pinMode(sen2,INPUT);
+     pinMode(sen3,INPUT);
+   /*..............*/
 
   //---setting fast pwm mode bits on TC0 Control Register A ---// 
     TCCR0A |=1<<COM0A1 ;
@@ -81,12 +93,35 @@ void loop() {
     if(re=='R'){right( velocity);delay (500); stopcar();}
     if(re=='L'){left( velocity); delay (500); stopcar(); }
     if(re=='S'){stopcar();}
+    if(re=='A'){linefollower();}
     
-   //  Serial.println(velocity);
+    Serial.println(re);
    // ultrasonic();
           
 }
+/*line folower*/
+void linefollower(){ 
+  RightSen=digitalRead(sen1);
+  Center=digitalRead(sen3);
+  LeftSen=digitalRead(sen2);
+  
+  if ((RightSen==HIGH & LeftSen==HIGH)| Center==HIGH)
+  {
+    forward(velocity);
+  }
 
+  else if((RightSen==HIGH & LeftSen==LOW & Center==LOW)|( RightSen==HIGH & LeftSen==LOW & Center==HIGH))
+  {
+    right(velocity);
+  }
+  else if((RightSen==LOW & LeftSen==HIGH &  Center==HIGH)|( RightSen==LOW & LeftSen==HIGH & Center==LOW))
+  {
+    left(velocity);
+  }
+ 
+}
+
+  /*****************************/
 /*void ultrasonic(){
   digitalWrite(trigPin, LOW);       // Clears the trigPin
   delayMicroseconds(2);
