@@ -152,18 +152,18 @@ void linefollower(){
 void forward(int velocity){
   OCR0A = velocity ;
   OCR1A = velocity ;  
-  PORTD &= 0 << PIND4 ; //M1B STOPS
-  PORTB &= 0 << PINB4 ; //M2B STOPS
-  PORTD |= 1 << PIND2 ; //D2 high (M1F)
-  PORTB |= 1 << PINB0 ; //B0 high (M2F) 
+  PORTD &= 0 << PIND4 ; //M1B LOW
+  PORTB &= 0 << PINB4 ; //M2B LOW
+  PORTD |= 1 << PIND2 ; //M1F high 
+  PORTB |= 1 << PINB0 ; //M2F high 
   Serial.println(re);
   }
   
 void backward(int velocity){
   OCR0A = velocity ;
   OCR1A = velocity ;
-  PORTD &= 0 << PIND2 ; //(M1F)stops
-  PORTB &= 0 << PINB0 ; // (M2F)stops
+  PORTD &= 0 << PIND2 ; //M1F low
+  PORTB &= 0 << PINB0 ; //M2F low
   PORTD |= 1 << PIND4 ; //M1B high
   PORTB |= 1 << PINB4 ; //M2B high
   
@@ -173,28 +173,28 @@ void backward(int velocity){
 void right(int velocity){
   OCR0A = velocity ;
   OCR1A = velocity ;
-  PORTD &= 0 << PIND4 ; //M1B STOPS
-  PORTB &= 0 << PINB4 ; //M2B STOPS
-  PORTD &= 0 << PIND2 ; //D2 high (M1F)
-  PORTB |= 1 << PINB0 ; //B0 high (M2F) 
+  PORTD |= 1 << PIND4 ; //M1B high
+  PORTB &= 0 << PINB4 ; //M2B low
+  PORTD &= 0 << PIND2 ; //M1F LOW 
+  PORTB |= 1 << PINB0 ; //M2F high 
   }
   
 void left(int velocity){
   OCR0A = velocity ;
   OCR1A = velocity ;
-  PORTD &= 0 << PIND4 ; //M1B STOPS
-  PORTB &= 0 << PINB4 ; //M2B STOPS
-  PORTD |= 1 << PIND2 ; //D2 high (M1F)
-  PORTB &= 0 << PINB0 ; //B0 high (M2F) 
+  PORTD &= 0 << PIND4 ; //M1B low
+  PORTB |= 1 << PINB4 ; //M2B high
+  PORTD |= 1 << PIND2 ; //M1F high 
+  PORTB &= 0 << PINB0 ; //M2F low 
   }
   
 void stopcar(){
   OCR0A = velocity ;
   OCR1A = velocity ;
-  PORTD &= 0 << PIND4 ; //M1B STOPS
-  PORTB &= 0 << PINB4 ; //M2B STOPS
-  PORTD &= 0 << PIND2 ; //D2 high (M1F)
-  PORTB &= 0 << PINB0 ; //B0 high (M2F)  
+  PORTD &= 0 << PIND4 ; //M1B low
+  PORTB &= 0 << PINB4 ; //M2B low
+  PORTD &= 0 << PIND2 ; //M1F low 
+  PORTB &= 0 << PINB0 ; //M2F low   
   }
   
   
