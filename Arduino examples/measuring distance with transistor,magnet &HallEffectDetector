@@ -1,0 +1,162 @@
+
+/****************************************************************************************************\
+** This code is intended to allow an Ardino Uno to control a model car having a small brushed DC motor
+** and drive it forward a given distance and then stop
+**
+** It expects a latching Hall Effect sensor hall Effect detector(HED)
+** attached to the body and a magnet attached to a non-drive wheel so that, as the wheel rotates, the
+** magnet and sensor align once a revolution.
+**
+** The motor will draw too much current for the Arduino pin so an NPN transistor (such as a 2N2222)
+** is driven through a 4.7k ohm resistor to drive the motor. If the motor draws more than 200mA, use
+** a TO-220 power transistor.
+**
+** It first waits for the wheel to be turned to align the magnet and the sensor.
+**
+** Once it sees alignment, it turns ON the on-board Arduino LED that is attached to digital pin 13
+** to notify the user that it is ready to run.
+**
+** It then awaits a SPST N.O. momentary switch to be pressed as a signal for the car to go.
+**
+** When pressed, it does a quick re-check to make sure the wheel is still in a known position.
+**
+** It starts the motor and then counts wheel revolutions until the required distance has been reached.
+**
+** It then turns OFF the motor
+\****************************************************************************************************/
+
+// pin declarations
+// pins chosen to avoid PWM pins to leave them free in case the project is expanded
+const int MOTOR_PIN = 7;	// pin 7 is an OUTPUT that has an NPN transistor attached which turns ON and OFF the DC motor
+const int GO_PIN = 8;		// pin 8 is an INPUT looking for a LOW signal to start the car
+const int WHEEL_PIN = 12;	// pin 12 is an INPUT that has the Hall Effect sensor attached -- LOW = magnet is present
+const int READY_PIN = 13;	// pin 13 is an OUTPUT that has an LED which signals that the car is ready for a run
+                                       // i.e. magnet is aligned with the Hall Effect sensor
+
+// non-pin declarations
+const int MAX_WHEEL = 10;	// number of wheel rotations to the target area -- 10 is a dummy number that needs to be set after experimentation
+const int READY = LOW;		// a LOW on the ready pin means that the magnet and hall effect sensor are aligned
+const int UNREADY = HIGH;	// a HIGH on the ready pin means that the magnet and hall effect sensor are not aligned
+
+void setup()
+{
+	// initialize pins
+	pinMode( GO_PIN, INPUT_PULLUP );
+	pinMode( WHEEL_PIN, INPUT_PULLUP );
+	pinMode( MOTOR_PIN, OUTPUT );
+	pinMode( READY_PIN, OUTPUT );
+
+       // DEBUG
+       Serial.begin(9600);
+       Serial.println("---== start ==---");
+}
+
+void loop()
+{
+ 	int loop_flg;		// flag to exit do while loop
+	int i;			// for loop index
+
+	// turn OFF motor & READY LED
+	digitalWrite(MOTOR_PIN, LOW);
+	digitalWrite(READY_PIN, LOW);
+
+       Serial.println("init over -- begin looking for wheel");
+
+	// LOOP waiting for ready signal -- wheel turned till magnet aligned with Hall Effect sensor
+	do
+	{
+   		loop_flg = digitalRead(WHEEL_PIN);
+
+		// debounce pin
+		if( loop_flg == READY )
+		{
+			delay(150);	// wait 150mS and check again
+			loop_flg = digitalRead(WHEEL_PIN);
+		}
+	} while ( loop_flg == UNREADY );
+
+	// turn ON ready LED
+	digitalWrite( READY_PIN, HIGH );
+
+       Serial.println("Found wheel -- turned ON ready led -- looking for go");
+
+	// LOOP waiting for GO signal -- LOW on pin 8
+	do
+	{
+   		loop_flg = digitalRead(GO_PIN);
+
+		// debounce pin
+		if( loop_flg == READY )
+		{
+			delay(50);	// wait 50ms and check again
+			loop_flg = digitalRead(GO_PIN);
+		}
+	} while ( loop_flg == UNREADY );
+
+       Serial.println("found go -- rechecking wheel");
+
+	//here: we have been waiting for the GO signal, so re-check that wheel is still ready
+	loop_flg = digitalRead(WHEEL_PIN);
+
+	if( loop_flg == READY )
+	{
+               Serial.println("wheel rechecked ok -- turning on motor");
+
+		// turn ON the motor
+		digitalWrite(MOTOR_PIN, HIGH);
+
+               Serial.println("motor on -- starting count");
+
+		// FOR LOOP counting wheel rotations
+		for( i = 0 ; i < MAX_WHEEL ; i++ )
+		{
+			// LOOP waiting for ready signal to go HIGH -- magnet no longer sensed by Hall Effect sensor
+			do
+			{
+   				loop_flg = digitalRead(WHEEL_PIN);
+
+				// debounce pin
+				if( loop_flg == UNREADY )
+				{
+					delay(50);	// wait 50ms and check again
+					loop_flg = digitalRead(WHEEL_PIN);
+				}
+			} while ( loop_flg == READY );
+
+                       Serial.println("magnet gone");
+
+			//here: the Hall Effect no longer sees the magnet
+
+			// LOOP waiting for ready signal to go LOW -- magnet now aligned with Hall Effect sensor
+			do
+			{
+   				loop_flg = digitalRead(WHEEL_PIN);
+
+				// debounce pin
+				if( loop_flg == READY )
+				{
+					delay(50);	// wait 50ms and check again
+					loop_flg = digitalRead(WHEEL_PIN);
+				}
+			} while ( loop_flg == UNREADY );
+
+			//here: the Hall Effect now sees the magnet = a revolution has been completed
+                       // so complete interation of for loop
+
+                       Serial.println("magnet present");
+                       Serial.print("revolution number ");
+                       Serial.println( i + 1 );
+		}
+
+		//here: the necessary revolutions have been executed
+
+		// turn OFF motor
+		digitalWrite( MOTOR_PIN, LOW );
+               Serial.println("motor off");
+               Serial.println("---== DONE ==---");
+	}
+       else
+       {
+               Serial.println("----- wheel mis-aligned when go was pressed -- redo -----");
+       }
+}
