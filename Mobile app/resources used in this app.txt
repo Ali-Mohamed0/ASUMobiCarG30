@@ -1,0 +1,6 @@
+For dealing with bluetooth in android :
+https://www.youtube.com/watch?v=hv_-tX1VwXE&list=PLgCYzUzKIBE8KHMzpp6JITZ2JxTgWqDH2&index=3
+
+For xml and design of app  :
+https://developer.android.com/design/index.html
+

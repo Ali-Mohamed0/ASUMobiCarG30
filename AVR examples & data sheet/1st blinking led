@@ -1,0 +1,22 @@
+// blinking led
+// just start reading Simply AVR yesterday
+//, i still can't write a code that change led intesity
+//but here is what i've learn until today :)
+
+
+#define F_CPU 1000000Ul // a must-write line
+
+//calling libraries
+#include <avr/io.h>
+#include <avr/delay.h>
+
+int main (void) {
+   DDRA = 0B00000001; // setting A0 as an output
+   while(1){
+   PORTA = 0B00000001; // pin A0 is high
+   _delay_ms(1000);
+   PORTA = 0B00000000 // pin A0 is low
+   _delay_ms(1000);
+   }
+return 0 ;
+}

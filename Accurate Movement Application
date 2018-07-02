@@ -1,0 +1,22 @@
+
+void accDist (float r)
+{
+float t=constant*r;
+forward(velocity);
+delay(t);
+}
+void accAngle (float theta)
+{
+float t=constant*theta;
+right(velocity);
+delay(t);
+}
+void recLoop (float side)
+{
+for(int i=0;i<4;i++)
+{
+accDist (side);
+accAngle(90);
+}
+delay(25000);
+}

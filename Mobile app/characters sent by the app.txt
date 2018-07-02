@@ -1,0 +1,9 @@
+"F" ==> forward
+"B" ==> backward
+"R" ==> right
+"L" ==> left
+"S" ==> stop
+"1" ==> no speed
+"2" ==> low speed
+"3" ==> medium speed
+"4" ==> max speed

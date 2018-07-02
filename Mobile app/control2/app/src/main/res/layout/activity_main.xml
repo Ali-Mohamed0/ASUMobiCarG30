@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/activity_main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingBottom="16dp"
+    android:paddingLeft="16dp"
+    android:paddingRight="16dp"
+    android:paddingTop="16dp"
+    tools:context="com.example.android.control2.MainActivity"
+
+    >
+
+
+    <Button
+        android:id="@+id/btnONOFF"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentTop="true"
+        android:onClick="on_off"
+        android:text="ON/OFF"
+        tools:ignore="HardcodedText,RtlHardcoded" />
+
+    <Button
+        android:text="Enable Discoverable"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/btnDiscoverable_on_off"
+        android:onClick="btnEnableDisable_Discoverable"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        tools:ignore="HardcodedText" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/btnFindUnpairedDevices"
+        android:text="Discover"
+        android:onClick="btnDiscover"
+        tools:ignore="HardcodedText" />
+
+    <ListView
+        android:layout_below="@+id/btnStartConnection"
+        android:layout_width="match_parent"
+        android:layout_height="150dp"
+
+        android:id="@+id/lvNewDevices"/>
+
+    <Button
+        android:id="@+id/btnStartConnection"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/btnFindUnpairedDevices"
+        android:layout_marginTop="10dp"
+        android:onClick="start"
+        android:text="Start Connection"
+
+        tools:ignore="HardcodedText" />
+
+    <Button
+        android:id="@+id/rock_and_roll"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/btnFindUnpairedDevices"
+        android:layout_marginTop="10dp"
+        android:layout_toRightOf="@id/btnStartConnection"
+        android:onClick="rock_nd_roll"
+        android:text="start"
+        tools:ignore="HardcodedText,RtlHardcoded" />
+
+
+
+
+</RelativeLayout>
