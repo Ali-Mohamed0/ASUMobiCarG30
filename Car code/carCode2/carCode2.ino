@@ -1,5 +1,4 @@
-#include <avr/io.h>
-#include <util/delay.h>
+
 int m1f=2;
 int m1b=4;
 int m1e=5;
@@ -25,7 +24,7 @@ void linefollower();
 //for ultrasonic
 const int trigPin = 11;     // defines pins numbers
 const int echoPin = 10;
-//const int vcc = 7 ;
+
 char re;
 long duration, cm;
 long microsecondsToCentimeters(long microseconds)
@@ -77,10 +76,11 @@ void loop() {
     if(re=='R'){right( velocity);}
     if(re=='L'){left( velocity); }
     if(re=='S'){stopcar();}
-//    if(re=='A'){linefollower();}
+//  if(re=='A'){linefollower();}
+    
     
     Serial.println(re);
-   // ultrasonic();
+    ultrasonic();
           
 }
 /*line folower*/
@@ -107,6 +107,7 @@ void loop() {
 
   /*****************************/
 void ultrasonic(){
+  delay(100);
   digitalWrite(trigPin, LOW);       // Clears the trigPin
   delayMicroseconds(2);
   digitalWrite(trigPin, HIGH);       // Sets the trigPin on HIGH state for 10 micro seconds
@@ -116,8 +117,8 @@ void ultrasonic(){
   duration = pulseIn(echoPin, HIGH);    // Reads the echoPin, returns the sound wave travel time in microseconds
  
    cm = microsecondsToCentimeters(duration);
-  Serial.print(cm);
-  Serial.print("cm");
+  //Serial.print(cm);
+  //Serial.print("cm");
                
 
      if(cm<30) 
@@ -182,26 +183,3 @@ void stopcar(){
   digitalWrite(m2b, LOW);  
   }
   
-  
-/*void inc_speed(){
-  
-  OCR0A +=50; 
-  OCR0B +=50; 
-  
-  if (OCR0A > 255){
-      OCR0A = 255 ; 
-      }
-  }
-
-
- 
-void dec_speed(){
-  OCR0A -=50; 
-  OCR1A -=50;
-  OCR0B -=50; 
-  OCR1B -=50;
-  
-   if (OCR0A < 0 ){
-     OCR0A = 0 ; 
-      } 
-  }  */
