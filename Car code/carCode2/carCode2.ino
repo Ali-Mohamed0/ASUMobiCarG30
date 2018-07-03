@@ -24,6 +24,7 @@ void linefollower();
 //for ultrasonic
 const int trigPin = 11;     // defines pins numbers
 const int echoPin = 10;
+char ultra='u';
 
 char re;
 long duration, cm;
@@ -35,6 +36,7 @@ long microsecondsToCentimeters(long microseconds)
 //........................
 int velocity;
 void setup() {
+  delay(10);
   pinMode(m1f, OUTPUT);
   pinMode(m1b, OUTPUT);
   pinMode(m1e, OUTPUT);
@@ -77,10 +79,14 @@ void loop() {
     if(re=='L'){left( velocity); }
     if(re=='S'){stopcar();}
 //  if(re=='A'){linefollower();}
-    
+    if(re=='U'){ultra='U';}
+    if(re=='u'){ultra='u';}
     
     Serial.println(re);
-    ultrasonic();
+    if(ultra=='U'){
+      ultrasonic();
+    }
+    
           
 }
 /*line folower*/
