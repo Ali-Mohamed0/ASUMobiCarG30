@@ -5,12 +5,15 @@ int m1e=5;
 int m2f=8;
 int m2b=12;
 int m2e=6;
-/*int sen1=3;
-int sen2=7;
+
+int r=0;
+int l=0;
+int c=1;
 int sen3=5;
-int LeftSen= 1;
-int RightSen=1;
-int Center= 1 ; */
+//line follower
+int LeftSen= 3;
+int RightSen=13;
+int CenterSen= 9 ; 
 void forward(int velocity );
 void backward(int velocity);
 void right(int velocity);
@@ -45,9 +48,9 @@ void setup() {
   pinMode(m2e, OUTPUT);
 
   //line follower
-  /*pinMode(sen1,INPUT); 
-   pinMode(sen2,INPUT);
-     pinMode(sen3,INPUT);*/
+  pinMode(LeftSen,INPUT); 
+  pinMode(RightSen,INPUT);
+  pinMode(CenterSen,INPUT);
  
   //for Ultrasonic
  pinMode(trigPin, OUTPUT);     // Sets the trigPin as an Output
@@ -78,7 +81,7 @@ void loop() {
     if(re=='R'){right( velocity);}
     if(re=='L'){left( velocity); }
     if(re=='S'){stopcar();}
-//  if(re=='A'){linefollower();}
+    if(re=='A'){linefollower();}
     if(re=='U'){ultra='U';}
     if(re=='u'){ultra='u';}
     
@@ -90,26 +93,26 @@ void loop() {
           
 }
 /*line folower*/
-/* void linefollower(){ 
-  RightSen=digitalRead(sen1);
-  Center=digitalRead(sen3);
-  LeftSen=digitalRead(sen2);
+ void linefollower(){ 
+  r=digitalRead(RightSen);
+  c=digitalRead(CenterSen);
+  l=digitalRead(LeftSen);
   
-  if ((RightSen==HIGH & LeftSen==HIGH)| Center==HIGH)
+  if (!l & c & !r)
   {
     forward(velocity);
   }
 
-  else if((RightSen==HIGH & LeftSen==LOW & Center==LOW)|( RightSen==HIGH & LeftSen==LOW & Center==HIGH))
+  else if(!l & !c & r )
   {
     right(velocity);
   }
-  else if((RightSen==LOW & LeftSen==HIGH &  Center==HIGH)|( RightSen==LOW & LeftSen==HIGH & Center==LOW))
+  else if(l & !c & !r)
   {
     left(velocity);
   }
  
-} */
+} 
 
   /*****************************/
 void ultrasonic(){
