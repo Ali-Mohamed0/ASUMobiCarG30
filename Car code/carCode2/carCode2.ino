@@ -15,19 +15,31 @@ int LeftSen= 3;
 int RightSen=13;
 int CenterSen= 9 ; 
 void forward(int velocity );
+void forwardright(int velocity );
+void forwardleft(int velocity );
 void backward(int velocity);
 void right(int velocity);
 void left(int velocity);
 void stopcar();
-//void inc_speed();
-//void dec_speed();
 void ultrasonic();
 void linefollower();
+int readLongNum();
+void displacement(int dist);
+void angle(int ang);
+void rect();
+void circ();
+void inf();
+void drawShapes();
 
 //for ultrasonic
 const int trigPin = 11;     // defines pins numbers
 const int echoPin = 10;
 char ultra='u';
+
+int delPercm=60;
+int delPerang=10;
+int speedratio=2;
+int circuleDelay=2500;
 
 char re;
 long duration, cm;
@@ -60,6 +72,7 @@ void setup() {
 }
 
 void loop() {
+  delay(50);
   if(Serial.available()){
       re=Serial.read();  
 
@@ -84,6 +97,14 @@ void loop() {
     if(re=='A'){linefollower();}
     if(re=='U'){ultra='U';}
     if(re=='u'){ultra='u';}
+    if(re=='D'){displacement(readLongNum());re='e';}
+    if(re=='G'){angle(readLongNum());re='e';}
+    if(re=='T'){velocity=readLongNum();re='e';}
+    if(re=='d'){delPercm=readLongNum();re='e';}
+    if(re=='a'){delPerang=readLongNum();re='e';}
+    if(re=='r'){speedratio=readLongNum();re='e';}
+    if(re=='c'){circuleDelay=readLongNum();re='e';}
+    if(re=='h'){drawShapes();re='e';}
     
     Serial.println(re);
     if(ultra=='U'){
@@ -145,18 +166,32 @@ void ultrasonic(){
 
 void forward(int velocity){
     
-  analogWrite(5, velocity);
-  analogWrite(6, velocity);
+  analogWrite(m1e, velocity);
+  analogWrite(m2e, velocity);
   digitalWrite(m1f, HIGH);
   digitalWrite(m2f, HIGH);
   digitalWrite(m1b, LOW);
   digitalWrite(m2b, LOW);
-  Serial.println(re);
   }
-  
+  void forwardright(int velocity ){
+  analogWrite(m1e, velocity/speedratio);
+  analogWrite(m2e, velocity);
+  digitalWrite(m1f, HIGH);
+  digitalWrite(m2f, HIGH);
+  digitalWrite(m1b, LOW);
+  digitalWrite(m2b, LOW);
+  }
+void forwardleft(int velocity ){
+   analogWrite(m1e, velocity);
+  analogWrite(m2e, velocity/speedratio);
+  digitalWrite(m1f, HIGH);
+  digitalWrite(m2f, HIGH);
+  digitalWrite(m1b, LOW);
+  digitalWrite(m2b, LOW);
+}
 void backward(int velocity){
-  analogWrite(5, velocity);
-  analogWrite(6, velocity);
+  analogWrite(m1e, velocity);
+  analogWrite(m2e, velocity);
   digitalWrite(m1f, LOW);
   digitalWrite(m2f, LOW);
   digitalWrite(m1b, HIGH);
@@ -166,8 +201,8 @@ void backward(int velocity){
 
   
 void right(int velocity){
-  analogWrite(5, velocity);
-  analogWrite(6, velocity);
+  analogWrite(m1e, velocity);
+  analogWrite(m2e, velocity);
   digitalWrite(m1f, LOW);
   digitalWrite(m2f, HIGH);
   digitalWrite(m1b, LOW);
@@ -175,8 +210,8 @@ void right(int velocity){
   }
   
 void left(int velocity){
-  analogWrite(5, velocity);
-  analogWrite(6, velocity);
+  analogWrite(m1e, velocity);
+  analogWrite(m2e, velocity);
   digitalWrite(m1f, HIGH);
   digitalWrite(m2f, LOW);
   digitalWrite(m1b, LOW);
@@ -184,11 +219,80 @@ void left(int velocity){
   }
   
 void stopcar(){
-  analogWrite(5, velocity);
-  analogWrite(6, velocity);
+  analogWrite(m1e, velocity);
+  analogWrite(m2e, velocity);
   digitalWrite(m1f, LOW);
   digitalWrite(m2f, LOW);
   digitalWrite(m1b, LOW);
   digitalWrite(m2b, LOW);  
   }
+
+  int readLongNum(){
+  int NumLen;
+  int tempNum;
+  int rightNum=0;
+  int i;
+  int sflag=1;
+ 
+  while(1){
+    if(Serial.available()){
+      if(sflag==1){
+        NumLen=Serial.read();
+        i=NumLen-'0';
+        sflag=0;
+      }else{
+        tempNum=Serial.read();
+        i--;
+      
+        if(tempNum=='q')break;
+        else {
+          tempNum=tempNum - '0';
+          rightNum+=tempNum*pow(10,i);
+        }
+      }
+    }
+  }
+
+return rightNum;
   
+}
+void displacement(int dist){
+  forward( velocity);
+  delay(dist*delPercm);
+  stopcar();
+}
+void angle(int ang){
+  left(velocity);
+  delay(ang*delPerang);
+  stopcar();
+}
+void rect(){
+  displacement(170);
+  angle(90);
+  displacement(170);
+  angle(90);
+  displacement(170);
+  angle(90);
+  displacement(170);
+  angle(90);
+}
+void circ(){
+  forwardleft(velocity);
+  delay(circuleDelay);
+  stopcar();
+}
+void inf(){
+   forwardleft(velocity);
+  delay(circuleDelay);
+  forwardright(velocity);
+  delay(circuleDelay);
+  stopcar();
+}
+void drawShapes(){
+  rect();
+  delay(10000);
+  circ();
+  delay(10000);
+  inf();
+}
+
