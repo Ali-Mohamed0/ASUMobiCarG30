@@ -1,0 +1,26 @@
+void movement(){
+//one cm movement
+  forward(10)//editing
+  delay(10)//editing
+}
+void angle(){
+  //one degree movement
+}
+void infinity(){
+  right()
+  delay(1000)//editing
+  left()
+  delay(1000)//editing
+}
+void circle(){
+
+}
+void rectangle(){
+  movement(10)
+  angle(90)
+  movement(20)
+  angle(90)
+  movement(10)
+  angle(90)
+  movement(20)
+}

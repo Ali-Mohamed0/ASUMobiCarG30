@@ -18,6 +18,7 @@ void forward(int velocity );
 void backward(int velocity);
 void right(int velocity);
 void left(int velocity);
+int readLongNum();
 void stopcar();
 //void inc_speed();
 //void dec_speed();
@@ -30,6 +31,7 @@ const int echoPin = 10;
 char ultra='u';
 
 char re;
+char temp_re;
 long duration, cm;
 long microsecondsToCentimeters(long microseconds)
 {
@@ -60,8 +62,12 @@ void setup() {
 }
 
 void loop() {
-  if(Serial.available()){
-      re=Serial.read();  
+  temp_re=Serial.read();  
+  if(temp_re=='1'|temp_re=='2'|temp_re=='3'|temp_re=='4'|temp_re=='F'|temp_re=='L'|temp_re=='R'|temp_re=='S'
+  |temp_re=='B'|temp_re=='A'|temp_re=='U'|temp_re=='u'|temp_re=='t'){
+    re=temp_re;
+  }
+    
 
   if ( re == '1' ){
     velocity = 0;
@@ -75,7 +81,7 @@ void loop() {
 
 
  
-    }
+    
     if(re=='F'){forward( velocity);}
     if(re=='B'){backward( velocity);}
     if(re=='R'){right( velocity);}
@@ -84,8 +90,9 @@ void loop() {
     if(re=='A'){linefollower();}
     if(re=='U'){ultra='U';}
     if(re=='u'){ultra='u';}
-    
-    Serial.println(re);
+    if(re=='t'){
+      Serial.println(readLongNum());re='e';}
+    //Serial.println(re);
     if(ultra=='U'){
       ultrasonic();
     }
@@ -191,4 +198,35 @@ void stopcar(){
   digitalWrite(m1b, LOW);
   digitalWrite(m2b, LOW);  
   }
+
+int readLongNum(){
+  int NumLen;
+  int tempNum;
+  int rightNum=0;
+  int i;
+  int sflag=1;
+ 
+  while(1){
+    if(Serial.available()){
+      if(sflag==1){
+        NumLen=Serial.read();
+        i=NumLen-'0';
+        sflag=0;
+      }else{
+        tempNum=Serial.read();
+        i--;
+      
+        if(tempNum=='q')break;
+        else {
+          tempNum=tempNum - '0';
+          rightNum+=tempNum*pow(10,i);
+        }
+      }
+    }
+  }
+
+return rightNum;
   
+}
+
+
