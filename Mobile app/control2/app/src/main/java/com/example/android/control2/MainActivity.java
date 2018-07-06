@@ -2,6 +2,7 @@ package com.example.android.control2;
 
 
 import android.Manifest;
+import android.annotation.SuppressLint;
 import android.app.ProgressDialog;
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
@@ -16,10 +17,12 @@ import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.text.Editable;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.Toast;
@@ -35,7 +38,7 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
 
     BluetoothAdapter mBluetoothAdapter;
     Button btnEnableDisable_Discoverable;
-    MediaPlayer mySong;
+
     BluetoothConnectionService mBluetoothConnection;
     Button btnStartConnection;
     BluetoothSocket btSocket = null;
@@ -49,82 +52,16 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
     ListView lvNewDevices;
     BluetoothDevice mBTDevice;
 
-    // Create a BroadcastReceiver for ACTION_FOUND
-    private final BroadcastReceiver mBroadcastReceiver1 = new BroadcastReceiver() {
-        public void onReceive(Context context, Intent intent) {
-            String action = intent.getAction();
-            // When discovery finds a device
-            if (action.equals(mBluetoothAdapter.ACTION_STATE_CHANGED)) {
-                final int state = intent.getIntExtra(BluetoothAdapter.EXTRA_STATE, mBluetoothAdapter.ERROR);
-
-                switch(state){
-                    case BluetoothAdapter.STATE_OFF:
-                        msg("onReceive: STATE OFF");
-                        break;
-                    case BluetoothAdapter.STATE_TURNING_OFF:
-                        msg("mBroadcastReceiver1: STATE TURNING OFF");
-                        break;
-                    case BluetoothAdapter.STATE_ON:
-                        msg("mBroadcastReceiver1: STATE ON");
-                        break;
-                    case BluetoothAdapter.STATE_TURNING_ON:
-                        msg("mBroadcastReceiver1: STATE TURNING ON");
-                        break;
-                }
-            }
-        }
-    };
-
-    /**
-     * Broadcast Receiver for changes made to bluetooth states such as:
-     * 1) Discoverability mode on/off or expire.
-     */
-    private final BroadcastReceiver mBroadcastReceiver2 = new BroadcastReceiver() {
-
-        @Override
-        public void onReceive(Context context, Intent intent) {
-            final String action = intent.getAction();
-
-            if (action.equals(BluetoothAdapter.ACTION_SCAN_MODE_CHANGED)) {
-
-                int mode = intent.getIntExtra(BluetoothAdapter.EXTRA_SCAN_MODE, BluetoothAdapter.ERROR);
-
-                switch (mode) {
-                    //Device is in Discoverable Mode
-                    case BluetoothAdapter.SCAN_MODE_CONNECTABLE_DISCOVERABLE:
-                        msg("mBroadcastReceiver2: Discoverability Enabled.");
-                        break;
-                    //Device not in discoverable mode
-                    case BluetoothAdapter.SCAN_MODE_CONNECTABLE:
-                        msg("mBroadcastReceiver2: Discoverability Disabled. Able to receive connections.");
-                        break;
-                    case BluetoothAdapter.SCAN_MODE_NONE:
-                       msg("mBroadcastReceiver2: Discoverability Disabled. Not able to receive connections.");
-                        break;
-                    case BluetoothAdapter.STATE_CONNECTING:
-                        msg("mBroadcastReceiver2: Connecting....");
-                        break;
-                    case BluetoothAdapter.STATE_CONNECTED:
-                       msg("mBroadcastReceiver2: Connected.");
-                        break;
-                }
-
-            }
-        }
-    };
 
 
 
 
-    /**
-     * Broadcast Receiver for listing devices that are not yet paired
-     * -Executed by btnDiscover() method.
-     */
+
     private BroadcastReceiver mBroadcastReceiver3 = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
             final String action = intent.getAction();
-           msg("onReceive: ACTION FOUND.");
+            msg("onReceive: ACTION FOUND.");
 
             if (action.equals(BluetoothDevice.ACTION_FOUND)){
                 BluetoothDevice device = intent.getParcelableExtra (BluetoothDevice.EXTRA_DEVICE);
@@ -135,7 +72,6 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
             }
         }
     };
-
     /**
      * Broadcast Receiver that detects bond state changes (Pairing status changes)
      */
@@ -164,9 +100,6 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
     };
 
 
-
-
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -183,12 +116,6 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
         mBluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
 
         lvNewDevices.setOnItemClickListener(MainActivity.this);
-        mySong = MediaPlayer.create(MainActivity.this,R.raw.ss);
-
-
-
-
-
 
 
 
@@ -206,15 +133,13 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
             Intent enableBTIntent = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
             startActivity(enableBTIntent);
 
-            IntentFilter BTIntent = new IntentFilter(BluetoothAdapter.ACTION_STATE_CHANGED);
-            registerReceiver(mBroadcastReceiver1, BTIntent);
+
         }
         if(mBluetoothAdapter.isEnabled()){
             msg("enableDisableBT: disabling BT.");
             mBluetoothAdapter.disable();
 
-            IntentFilter BTIntent = new IntentFilter(BluetoothAdapter.ACTION_STATE_CHANGED);
-            registerReceiver(mBroadcastReceiver1, BTIntent);
+
         }
 
     }
@@ -265,8 +190,9 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
         discoverableIntent.putExtra(BluetoothAdapter.EXTRA_DISCOVERABLE_DURATION, 300);
         startActivity(discoverableIntent);
 
-        IntentFilter intentFilter = new IntentFilter(mBluetoothAdapter.ACTION_SCAN_MODE_CHANGED);
-        registerReceiver(mBroadcastReceiver2,intentFilter);
+
+
+
 
     }
 
@@ -287,10 +213,10 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
 
             //check BT permissions in manifest
 
-
             mBluetoothAdapter.startDiscovery();
             IntentFilter discoverDevicesIntent = new IntentFilter(BluetoothDevice.ACTION_FOUND);
             registerReceiver(mBroadcastReceiver3, discoverDevicesIntent);
+
         }
     }
 
@@ -307,17 +233,6 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
         //first cancel discovery because its very memory intensive.
         mBluetoothAdapter.cancelDiscovery();
 
-        msg("onItemClick: You Clicked on a device.");
-        String deviceName = mBTDevices.get(i).getName();
-        String deviceAddress = mBTDevices.get(i).getAddress();
-
-
-
-        msg("onItemClick: deviceName = " + deviceName);
-        msg("onItemClick: deviceAddress = " + deviceAddress);
-
-        //create the bond.
-        //NOTE: Requires API 17+? I think this is JellyBean
 
         mBTDevice = mBTDevices.get(i);
         mBluetoothConnection = new BluetoothConnectionService(MainActivity.this);
@@ -326,7 +241,7 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
     {
         Toast.makeText(getApplicationContext(), s, Toast.LENGTH_SHORT).show();
     }
-    private void left()
+    private void left1()
     {
         if (btSocket!=null)
         {
@@ -345,7 +260,7 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
             setContentView(R.layout.activity_main);
         }
     }
-    private void forward()
+    private void forward1()
     {
         if (btSocket!=null)
         {
@@ -363,7 +278,7 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
             setContentView(R.layout.activity_main);
         }
     }
-    private void right()
+    private void right1()
     {
         if (btSocket!=null)
         {
@@ -381,7 +296,7 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
             setContentView(R.layout.activity_main);
         }
     }
-    private void backward()
+    private void backward1()
     {
         if (btSocket!=null)
         {
@@ -399,7 +314,7 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
             setContentView(R.layout.activity_main);
         }
     }
-    private void stop()
+    private void stop1()
     {
         if (btSocket!=null)
         {
@@ -417,7 +332,7 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
             setContentView(R.layout.activity_main);
         }
     }
-    private void low()
+    private void low1()
     {
         if (btSocket!=null)
         {
@@ -435,7 +350,7 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
             setContentView(R.layout.activity_main);
         }
     }
-    private void medium()
+    private void medium1()
     {
         if (btSocket!=null)
         {
@@ -453,7 +368,7 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
             setContentView(R.layout.activity_main);
         }
     }
-    private void high()
+    private void high1()
     {
         if (btSocket!=null)
         {
@@ -471,7 +386,7 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
             setContentView(R.layout.activity_main);
         }
     }
-    private void no()
+    private void no1()
     {
         if (btSocket!=null)
         {
@@ -507,30 +422,142 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
             setContentView(R.layout.activity_main);
         }
     }
-    private void playIt()
+    private void circlee()
     {
-        mySong.start();
+        if (btSocket!=null)
+        {
+            try
+            {
+                btSocket.getOutputStream().write("C".toString().getBytes());
+            }
+            catch (IOException e)
+            {
+                msg("Error");
+            }
+        }
+        else{
+            msg("connect first");
+            setContentView(R.layout.activity_main);
+        }
     }
+    private void rectanglee()
+    {
+        if (btSocket!=null)
+        {
+            try
+            {
+                btSocket.getOutputStream().write("R".toString().getBytes());
+            }
+            catch (IOException e)
+            {
+                msg("Error");
+            }
+        }
+        else{
+            msg("connect first");
+            setContentView(R.layout.activity_main);
+        }
+    }
+    private void infinityy()
+    {
+        if (btSocket!=null)
+        {
+            try
+            {
+                btSocket.getOutputStream().write("I".toString().getBytes());
+            }
+            catch (IOException e)
+            {
+                msg("Error");
+            }
+        }
+        else{
+            msg("connect first");
+            setContentView(R.layout.activity_main);
+        }
+    }
+    private void distance()
+    {
+
+        EditText distance = (EditText)findViewById(R.id.dist);
+        Editable dis = distance.getText();
+        String dis1 = dis.toString();
+        if(dis1.length()==1)
+            dis1 = "00"+ dis1;
+        else if(dis1.length()==2)
+            dis1 = '0'+dis1;
+        else if(dis1.length()>3){
+            msg("distance must be 3 characters");
+            return;
+        }
+        if (btSocket!=null)
+        {
+            try
+            {
+                btSocket.getOutputStream().write(('#' + dis1).getBytes());
+            }
+            catch (IOException e)
+            {
+                msg("Error");
+            }
+        }
+        else{
+            msg("connect first");
+            setContentView(R.layout.activity_main);
+        }
+    }
+    private void angle()
+    {
+        EditText angle = (EditText)findViewById(R.id.ang);
+        Editable ang = angle.getText();
+        String ang1 = ang.toString();
+        if(ang1.length()==1){
+            ang1 = "00"+ang1;
+        }
+        else if(ang1.length()==2){
+            ang1 = '0' + ang1;
+        }
+        else if(ang1.length()>3){
+            msg("angle must be 3 characters");
+            return;
+        }
+        if (btSocket!=null)
+        {
+            try
+            {
+                btSocket.getOutputStream().write(('@' + ang1).getBytes());
+            }
+            catch (IOException e)
+            {
+                msg("Error");
+            }
+        }
+        else{
+            msg("connect first");
+            setContentView(R.layout.activity_main);
+        }
+    }
+
 
 
     public void left(View view) {
-        left();
+        left1();
     }
 
     public void backward(View view) {
-        backward();
+        backward1();
     }
 
     public void forward(View view) {
-        forward();
+        forward1();
     }
 
     public void right(View view) {
-        right();
+        right1();
     }
 
     public void stop(View view) {
-        stop();
+        stop1();
     }
 
     public void rock_nd_roll(View view) {
@@ -548,17 +575,42 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
         startConnection();
     }
 
-    public void low(View view) {low();}
+    public void low(View view) {low1();}
 
-    public void medium(View view) {medium();}
+    public void medium(View view) {medium1();}
 
-    public void high(View view) {high();}
+    public void high(View view) {high1();}
 
-    public void no(View view) {no();}
+    public void no(View view) {no1();}
 
     public void line_track(View view) {line_trackk();}
 
-    public void play(View view) {
-        playIt();
+
+    public void easy(View view) {
+        setContentView(R.layout.easy_driving);
+    }
+    public void connect_page(View view) {
+        setContentView(R.layout.activity_main);
+    }
+
+
+    public void distanccee(View view) {
+        distance();
+    }
+
+    public void anglee(View view) {
+        angle();
+    }
+
+    public void rectangle(View view) {
+        rectanglee();
+    }
+
+    public void circle(View view) {
+        circlee();
+    }
+
+    public void infinity(View view) {
+        infinityy();
     }
 }
