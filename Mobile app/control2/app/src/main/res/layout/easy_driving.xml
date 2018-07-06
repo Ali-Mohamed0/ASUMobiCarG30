@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.example.android.control2.MainActivity"
+    tools:layout_editor_absoluteY="81dp"
+    tools:layout_editor_absoluteX="0dp">
+
+
+    <EditText
+        android:id="@+id/dist"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:hint="distance"
+        android:inputType="numberDecimal"
+        tools:layout_editor_absoluteX="85dp"
+        tools:layout_editor_absoluteY="55dp"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        android:layout_marginTop="55dp"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+    <EditText
+        android:id="@+id/ang"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:hint="angle (0 -359)"
+        android:inputType="numberDecimal"
+        tools:layout_editor_absoluteX="85dp"
+        tools:layout_editor_absoluteY="126dp"
+        app:layout_constraintStart_toStartOf="@+id/dist"
+        android:layout_marginTop="25dp"
+        app:layout_constraintTop_toBottomOf="@+id/dist" />
+
+    <Button
+        android:id="@+id/page2"
+        android:layout_width="196dp"
+        android:layout_height="wrap_content"
+        android:onClick="rock_nd_roll"
+        android:text="start"
+        tools:layout_editor_absoluteX="94dp"
+        tools:layout_editor_absoluteY="368dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginBottom="14dp"
+        app:layout_constraintBottom_toTopOf="@+id/page1" />
+    <Button
+        android:id="@+id/page1"
+        android:layout_width="196dp"
+        android:layout_height="wrap_content"
+        android:text="connection"
+        tools:layout_editor_absoluteX="94dp"
+        tools:layout_editor_absoluteY="430dp"
+        android:onClick="connect_page"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginBottom="33dp" />
+
+    <Button
+        android:id="@+id/send_dist"
+        android:layout_width="196dp"
+        android:layout_height="wrap_content"
+        android:onClick="distanccee"
+        android:text="send dist."
+        tools:layout_editor_absoluteX="94dp"
+        tools:layout_editor_absoluteY="198dp"
+        app:layout_constraintStart_toStartOf="parent"
+        android:layout_marginTop="26dp"
+        app:layout_constraintTop_toBottomOf="@+id/ang"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+    <Button
+        android:id="@+id/send_angle"
+        android:layout_width="196dp"
+        android:layout_height="wrap_content"
+        android:onClick="anglee"
+        android:text="send angle"
+        tools:layout_editor_absoluteX="94dp"
+        tools:layout_editor_absoluteY="263dp"
+        app:layout_constraintStart_toStartOf="parent"
+        android:layout_marginTop="17dp"
+        app:layout_constraintTop_toBottomOf="@+id/send_dist"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+    <Button
+        android:id="@+id/circle"
+        android:layout_width="170dp"
+        android:layout_height="0dp"
+        android:layout_marginStart="16dp"
+        android:onClick="circle"
+        android:text="circle"
+        app:layout_constraintBottom_toTopOf="@+id/infinity"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/send_angle"
+        tools:layout_editor_absoluteX="16dp"
+        tools:layout_editor_absoluteY="310dp" />
+
+    <Button
+        android:id="@+id/rectangle"
+        android:layout_width="147dp"
+        android:layout_height="0dp"
+        android:layout_marginBottom="1dp"
+        android:layout_marginEnd="10dp"
+        android:onClick="rectangle"
+        android:text="rectangle"
+        app:layout_constraintBottom_toTopOf="@+id/infinity"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/send_angle"
+        tools:layout_editor_absoluteX="227dp"
+        tools:layout_editor_absoluteY="310dp" />
+
+    <Button
+        android:id="@+id/infinity"
+        android:layout_width="235dp"
+        android:layout_height="58dp"
+        android:layout_marginBottom="47dp"
+        android:layout_marginTop="33dp"
+        android:onClick="infinity"
+        android:text="infinity"
+        app:layout_constraintBottom_toBottomOf="@+id/page2"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/send_angle"
+        tools:layout_editor_absoluteX="75dp"
+        tools:layout_editor_absoluteY="343dp" />
+</android.support.constraint.ConstraintLayout>

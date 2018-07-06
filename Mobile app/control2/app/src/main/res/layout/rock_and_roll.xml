@@ -147,14 +147,14 @@
         android:layout_marginTop="44dp" />
 
     <Button
-        android:id="@+id/play"
+        android:id="@+id/easy"
         android:layout_width="0dp"
         android:layout_height="70dp"
-        android:text="play Music"
+        android:text="easy drive"
         tools:layout_editor_absoluteX="0dp"
         tools:layout_editor_absoluteY="400dp"
         android:rotation="90"
-        android:onClick="play"
+        android:onClick="easy"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="@+id/button5"
