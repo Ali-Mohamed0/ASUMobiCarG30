@@ -38,7 +38,7 @@ char ultra='u';
 
 int delPercm=60;
 int delPerang=10;
-int speedratio=2;
+float speedratio=2;
 int circuleDelay=2500;
 
 char re;
@@ -102,11 +102,13 @@ void loop() {
     if(re=='T'){velocity=readLongNum();re='e';}
     if(re=='d'){delPercm=readLongNum();re='e';}
     if(re=='a'){delPerang=readLongNum();re='e';}
-    if(re=='r'){speedratio=readLongNum();re='e';}
+    if(re=='r'){speedratio=readLongNum()/100.0;re='e';}
     if(re=='c'){circuleDelay=readLongNum();re='e';}
     if(re=='h'){drawShapes();re='e';}
-    
-    Serial.println(re);
+    if(re=='o'){rect();re='e';}
+    if(re=='p'){circ();re='e';}
+    if(re=='q'){inf();re='e';}
+    //Serial.println(speedratio);
     if(ultra=='U'){
       ultrasonic();
     }
@@ -174,7 +176,7 @@ void forward(int velocity){
   digitalWrite(m2b, LOW);
   }
   void forwardright(int velocity ){
-  analogWrite(m1e, velocity/speedratio);
+  analogWrite(m1e, velocity*speedratio);
   analogWrite(m2e, velocity);
   digitalWrite(m1f, HIGH);
   digitalWrite(m2f, HIGH);
@@ -183,7 +185,7 @@ void forward(int velocity){
   }
 void forwardleft(int velocity ){
    analogWrite(m1e, velocity);
-  analogWrite(m2e, velocity/speedratio);
+  analogWrite(m2e, velocity*speedratio);
   digitalWrite(m1f, HIGH);
   digitalWrite(m2f, HIGH);
   digitalWrite(m1b, LOW);
@@ -267,13 +269,13 @@ void angle(int ang){
   stopcar();
 }
 void rect(){
-  displacement(170);
+  displacement(100);
   angle(90);
-  displacement(170);
+  displacement(100);
   angle(90);
-  displacement(170);
+  displacement(100);
   angle(90);
-  displacement(170);
+  displacement(100);
   angle(90);
 }
 void circ(){
