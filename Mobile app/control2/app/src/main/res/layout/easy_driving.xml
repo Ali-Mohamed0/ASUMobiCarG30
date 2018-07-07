@@ -88,44 +88,16 @@
         app:layout_constraintEnd_toEndOf="parent" />
 
     <Button
-        android:id="@+id/circle"
-        android:layout_width="170dp"
-        android:layout_height="0dp"
-        android:layout_marginStart="16dp"
-        android:onClick="circle"
-        android:text="circle"
-        app:layout_constraintBottom_toTopOf="@+id/infinity"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/send_angle"
-        tools:layout_editor_absoluteX="16dp"
-        tools:layout_editor_absoluteY="310dp" />
-
-    <Button
-        android:id="@+id/rectangle"
-        android:layout_width="147dp"
-        android:layout_height="0dp"
+        android:id="@+id/button6"
+        android:layout_width="191dp"
+        android:layout_height="wrap_content"
         android:layout_marginBottom="1dp"
-        android:layout_marginEnd="10dp"
-        android:onClick="rectangle"
-        android:text="rectangle"
-        app:layout_constraintBottom_toTopOf="@+id/infinity"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/send_angle"
-        tools:layout_editor_absoluteX="227dp"
-        tools:layout_editor_absoluteY="310dp" />
-
-    <Button
-        android:id="@+id/infinity"
-        android:layout_width="235dp"
-        android:layout_height="58dp"
-        android:layout_marginBottom="47dp"
-        android:layout_marginTop="33dp"
-        android:onClick="infinity"
-        android:text="infinity"
-        app:layout_constraintBottom_toBottomOf="@+id/page2"
+        android:onClick="shapes"
+        android:text="shapes"
+        app:layout_constraintBottom_toTopOf="@+id/page2"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/send_angle"
-        tools:layout_editor_absoluteX="75dp"
-        tools:layout_editor_absoluteY="343dp" />
+        tools:layout_editor_absoluteX="96dp"
+        tools:layout_editor_absoluteY="319dp" />
+
 </android.support.constraint.ConstraintLayout>

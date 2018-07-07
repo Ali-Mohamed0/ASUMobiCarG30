@@ -428,7 +428,7 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
         {
             try
             {
-                btSocket.getOutputStream().write("C".toString().getBytes());
+                btSocket.getOutputStream().write("p".toString().getBytes());
             }
             catch (IOException e)
             {
@@ -446,7 +446,7 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
         {
             try
             {
-                btSocket.getOutputStream().write("R".toString().getBytes());
+                btSocket.getOutputStream().write("o".toString().getBytes());
             }
             catch (IOException e)
             {
@@ -464,7 +464,7 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
         {
             try
             {
-                btSocket.getOutputStream().write("I".toString().getBytes());
+                btSocket.getOutputStream().write("q".toString().getBytes());
             }
             catch (IOException e)
             {
@@ -482,19 +482,16 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
         EditText distance = (EditText)findViewById(R.id.dist);
         Editable dis = distance.getText();
         String dis1 = dis.toString();
-        if(dis1.length()==1)
-            dis1 = "00"+ dis1;
-        else if(dis1.length()==2)
-            dis1 = '0'+dis1;
-        else if(dis1.length()>3){
-            msg("distance must be 3 characters");
-            return;
-        }
+
         if (btSocket!=null)
         {
             try
             {
-                btSocket.getOutputStream().write(('#' + dis1).getBytes());
+                btSocket.getOutputStream().write("D".toString().getBytes());
+                btSocket.getOutputStream().write((String.valueOf(dis1.length())).getBytes());
+                btSocket.getOutputStream().write(dis1.toString().getBytes());
+                btSocket.getOutputStream().write("q".toString().getBytes());
+
             }
             catch (IOException e)
             {
@@ -511,21 +508,135 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
         EditText angle = (EditText)findViewById(R.id.ang);
         Editable ang = angle.getText();
         String ang1 = ang.toString();
-        if(ang1.length()==1){
-            ang1 = "00"+ang1;
-        }
-        else if(ang1.length()==2){
-            ang1 = '0' + ang1;
-        }
-        else if(ang1.length()>3){
-            msg("angle must be 3 characters");
-            return;
-        }
+
         if (btSocket!=null)
         {
             try
             {
-                btSocket.getOutputStream().write(('@' + ang1).getBytes());
+                btSocket.getOutputStream().write("G".toString().getBytes());
+                btSocket.getOutputStream().write((String.valueOf(ang1.length())).getBytes());
+                btSocket.getOutputStream().write(ang1.toString().getBytes());
+                btSocket.getOutputStream().write("q".toString().getBytes());
+            }
+            catch (IOException e)
+            {
+                msg("Error");
+            }
+        }
+        else{
+            msg("connect first");
+            setContentView(R.layout.activity_main);
+        }
+    }
+    private void draw_shapess()
+    {
+
+
+        if (btSocket!=null)
+        {
+            try
+            {
+                btSocket.getOutputStream().write("h".toString().getBytes());
+            }
+            catch (IOException e)
+            {
+                msg("Error");
+            }
+        }
+        else{
+            msg("connect first");
+            setContentView(R.layout.activity_main);
+        }
+    }
+    private void circle_delayy()
+    {
+        EditText cd = (EditText)findViewById(R.id.circleDelay);
+        Editable cd11 = cd.getText();
+        String cd1 = cd11.toString();
+
+        if (btSocket!=null)
+        {
+            try
+            {
+                btSocket.getOutputStream().write("c".toString().getBytes());
+                btSocket.getOutputStream().write((String.valueOf(cd1.length())).getBytes());
+                btSocket.getOutputStream().write(cd1.toString().getBytes());
+                btSocket.getOutputStream().write("q".toString().getBytes());
+            }
+            catch (IOException e)
+            {
+                msg("Error");
+            }
+        }
+        else{
+            msg("connect first");
+            setContentView(R.layout.activity_main);
+        }
+    }
+    private void speed_ratioo()
+    {
+        EditText cd = (EditText)findViewById(R.id.speedRatio);
+        Editable sr11 = cd.getText();
+        String sr1 = sr11.toString();
+
+        if (btSocket!=null)
+        {
+            try
+            {
+                btSocket.getOutputStream().write("r".toString().getBytes());
+                btSocket.getOutputStream().write((String.valueOf(sr1.length())).getBytes());
+                btSocket.getOutputStream().write(sr1.toString().getBytes());
+                btSocket.getOutputStream().write("q".toString().getBytes());
+            }
+            catch (IOException e)
+            {
+                msg("Error");
+            }
+        }
+        else{
+            msg("connect first");
+            setContentView(R.layout.activity_main);
+        }
+    }
+    private void tune_speedd()
+    {
+        EditText cd = (EditText)findViewById(R.id.tuneSpeed);
+        Editable ts11 = cd.getText();
+        String ts1 = ts11.toString();
+
+        if (btSocket!=null)
+        {
+            try
+            {
+                btSocket.getOutputStream().write("T".toString().getBytes());
+                btSocket.getOutputStream().write((String.valueOf(ts1.length())).getBytes());
+                btSocket.getOutputStream().write(ts1.toString().getBytes());
+                btSocket.getOutputStream().write("q".toString().getBytes());
+            }
+            catch (IOException e)
+            {
+                msg("Error");
+            }
+        }
+        else{
+            msg("connect first");
+            setContentView(R.layout.activity_main);
+        }
+    }
+    private void tune_distancee()
+    {
+        EditText cd = (EditText)findViewById(R.id.tuneDistance);
+        Editable td11 = cd.getText();
+        String td1 = td11.toString();
+
+        if (btSocket!=null)
+        {
+            try
+            {
+                btSocket.getOutputStream().write("d".toString().getBytes());
+                btSocket.getOutputStream().write((String.valueOf(td1.length())).getBytes());
+                btSocket.getOutputStream().write(td1.toString().getBytes());
+                btSocket.getOutputStream().write("q".toString().getBytes());
             }
             catch (IOException e)
             {
@@ -538,7 +649,31 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
         }
     }
 
+    private void tune_anglee()
+    {
+        EditText cd = (EditText)findViewById(R.id.tuneAngle);
+        Editable ta11 = cd.getText();
+        String ta1 = ta11.toString();
 
+        if (btSocket!=null)
+        {
+            try
+            {
+                btSocket.getOutputStream().write("a".toString().getBytes());
+                btSocket.getOutputStream().write((String.valueOf(ta1.length())).getBytes());
+                btSocket.getOutputStream().write(ta1.toString().getBytes());
+                btSocket.getOutputStream().write("q".toString().getBytes());
+            }
+            catch (IOException e)
+            {
+                msg("Error");
+            }
+        }
+        else{
+            msg("connect first");
+            setContentView(R.layout.activity_main);
+        }
+    }
 
     public void left(View view) {
         left1();
@@ -613,4 +748,18 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
     public void infinity(View view) {
         infinityy();
     }
+
+    public void shapes(View view) {setContentView(R.layout.shapes);}
+
+    public void draw_shapes(View view) {draw_shapess();}
+
+    public void circle_delay(View view) {circle_delayy();}
+
+    public void speed_ratio(View view) {speed_ratioo();}
+
+    public void tune_distance(View view) {tune_distancee();}
+
+    public void tune_speed(View view) {tune_speedd();}
+
+    public void tune_angle(View view) {tune_anglee();}
 }
